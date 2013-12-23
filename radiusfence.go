@@ -11,7 +11,7 @@ const (
 	GradToRad = 0.015707963267948966192313216916397514420985846996876 // N[Pi/200, 50]
 	RadToGrad = 63.661977236758134307553505349005744813783858296183   // N[200/Pi, 50]
 
-	Radius = 6371 //Earth in km
+	EarthRadius = 6371 //Earth in km
 
 	North = 0
 	East  = 90
@@ -66,10 +66,10 @@ func getBoundingBox(rf Radiusfence) (x1, x2, y1, y2 float64) {
 	latRad := rf.p.Latitude * DegToRad
 	longRad := rf.p.Longitude * DegToRad
 
-	northMost := math.Asin(math.Sin(latRad)*math.Cos(rf.r/Radius) + math.Cos(latRad)*math.Sin(rf.r/Radius)*math.Cos(North))
-	southMost := math.Asin(math.Sin(latRad)*math.Cos(rf.r/Radius) + math.Cos(latRad)*math.Sin(rf.r/Radius)*math.Cos(South))
-	eastMost := longRad + math.Atan2(math.Sin(East)*math.Sin(rf.r/Radius)*math.Cos(latRad), math.Cos(rf.r/Radius)-math.Sin(latRad)*math.Sin(latRad))
-	westMost := longRad + math.Atan2(math.Sin(West)*math.Sin(rf.r/Radius)*math.Cos(latRad), math.Cos(rf.r/Radius)-math.Sin(latRad)*math.Sin(latRad))
+	northMost := math.Asin(math.Sin(latRad)*math.Cos(rf.r/EarthRadius) + math.Cos(latRad)*math.Sin(rf.r/EarthRadius)*math.Cos(North))
+	southMost := math.Asin(math.Sin(latRad)*math.Cos(rf.r/EarthRadius) + math.Cos(latRad)*math.Sin(rf.r/EarthRadius)*math.Cos(South))
+	eastMost := longRad + math.Atan2(math.Sin(East)*math.Sin(rf.r/EarthRadius)*math.Cos(latRad), math.Cos(rf.r/EarthRadius)-math.Sin(latRad)*math.Sin(latRad))
+	westMost := longRad + math.Atan2(math.Sin(West)*math.Sin(rf.r/EarthRadius)*math.Cos(latRad), math.Cos(rf.r/EarthRadius)-math.Sin(latRad)*math.Sin(latRad))
 
 	if northMost > southMost {
 		lat1 = southMost
